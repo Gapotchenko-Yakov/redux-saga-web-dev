@@ -2,6 +2,7 @@ import { createStore, compose, applyMiddleware } from "redux";
 import reducer from "./reducers";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
+import logger from "redux-logger";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,7 +17,7 @@ const configureStore = (preloadedState) =>
   createStore(
     reducer,
     preloadedState,
-    composeEnhancers(applyMiddleware(sagaMiddleware))
+    composeEnhancers(applyMiddleware(sagaMiddleware), applyMiddleware(logger))
   );
 
 const store = configureStore({});
