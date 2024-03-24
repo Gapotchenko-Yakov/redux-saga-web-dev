@@ -1,15 +1,6 @@
 import { combineReducers } from "redux";
+import counter from "./counter";
 
-const initialState = {
-  test: {},
-};
-const testReducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
-export const reducer = combineReducers({ test: testReducer });
+export const reducer = combineReducers({ counter: counter });
 
 export default reducer;
