@@ -13,6 +13,8 @@ import {
   GET_NEWS,
   SET_LATEST_NEWS_ERROR,
   SET_POPULAR_NEWS_ERROR,
+  GET_POPULAR_NEWS,
+  GET_LATEST_NEWS,
 } from "../constants";
 import { getLatestNews, getPopularNews } from "../../api";
 import { setLatestNews, setPopularNews } from "../actions/actionCreator";
@@ -31,7 +33,7 @@ export function* handleLatestNews() {
 
 export function* handlePopularNews() {
   try {
-    const data = yield call(getPopularNews, 10);
+    const data = yield call(getPopularNews, 4);
     yield put(setPopularNews(data));
   } catch (e) {
     yield put({
@@ -41,17 +43,15 @@ export function* handlePopularNews() {
   }
 }
 
-export function* handleNews() {
-  //workerSaga
-  // yield all([call(handleLatestNews), call(handlePopularNews)]);
-  yield fork(handleLatestNews);
-  yield fork(handlePopularNews);
+function* watchPopularSaga() {
+  yield takeEvery(GET_POPULAR_NEWS, handlePopularNews);
 }
 
-export function* watchClickSaga() {
-  yield takeEvery(GET_NEWS, handleNews);
+function* watchLatestSaga() {
+  yield takeEvery(GET_LATEST_NEWS, handleLatestNews);
 }
 
 export default function* rootSaga() {
-  yield watchClickSaga();
+  yield fork(watchLatestSaga);
+  yield fork(watchPopularSaga);
 }

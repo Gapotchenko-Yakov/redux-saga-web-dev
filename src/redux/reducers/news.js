@@ -9,12 +9,12 @@ const news = (state = initialState, action) => {
     case SET_LATEST_NEWS:
       return {
         ...state,
-        latestNews: [...state.latestNews, ...action.payload],
+        latestNews: action.payload,
       };
     case SET_POPULAR_NEWS:
       return {
         ...state,
-        popularNews: [...state.popularNews, ...action.payload],
+        popularNews: action.payload,
       };
     default:
       return state;

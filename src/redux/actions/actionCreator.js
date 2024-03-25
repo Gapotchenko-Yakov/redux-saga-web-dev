@@ -1,7 +1,16 @@
-import { GET_NEWS, SET_LATEST_NEWS, SET_POPULAR_NEWS } from "../constants";
+import {
+  GET_LATEST_NEWS,
+  GET_POPULAR_NEWS,
+  SET_LATEST_NEWS,
+  SET_POPULAR_NEWS,
+} from "../constants";
 
-export const getNews = () => ({
-  type: GET_NEWS,
+export const getLatestNews = () => ({
+  type: GET_LATEST_NEWS,
+});
+
+export const getPopularNews = () => ({
+  type: GET_POPULAR_NEWS,
 });
 
 export const setLatestNews = (news) => ({
