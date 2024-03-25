@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import counter from "./counter";
 import news from "./news";
+import errors from "./errors";
 
 export const reducer = combineReducers({
-  counter: counter,
   news: news,
+  errors: errors,
 });
 
 export default reducer;

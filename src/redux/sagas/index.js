@@ -5,19 +5,40 @@ import {
   fork,
   all,
   race,
+  spawn,
 } from "@redux-saga/core/effects";
-import { INCREASE_COUNT, DECREASE_COUNT, GET_NEWS } from "../constants";
+import {
+  INCREASE_COUNT,
+  DECREASE_COUNT,
+  GET_NEWS,
+  SET_LATEST_NEWS_ERROR,
+  SET_POPULAR_NEWS_ERROR,
+} from "../constants";
 import { getLatestNews, getPopularNews } from "../../api";
 import { setLatestNews, setPopularNews } from "../actions/actionCreator";
 
 export function* handleLatestNews() {
-  const data = yield call(handleLatestNews, 4);
-  yield put(setLatestNews(data));
+  try {
+    const data = yield call(getLatestNews, 4);
+    yield put(setLatestNews(data));
+  } catch (e) {
+    yield put({
+      type: SET_LATEST_NEWS_ERROR,
+      payload: "Error fetching latest news.",
+    });
+  }
 }
 
 export function* handlePopularNews() {
-  const data = yield call(getPopularNews, 10);
-  yield put(setPopularNews(data));
+  try {
+    const data = yield call(getPopularNews, 10);
+    yield put(setPopularNews(data));
+  } catch (e) {
+    yield put({
+      type: SET_POPULAR_NEWS_ERROR,
+      payload: "Error fetching popular news.",
+    });
+  }
 }
 
 export function* handleNews() {

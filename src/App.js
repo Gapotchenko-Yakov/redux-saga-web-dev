@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  decreaseCount,
-  getNews,
-  increaseCount,
-} from "./redux/actions/actionCreator";
+import { useSelector, useDispatch } from "react-redux";
+import { getNews } from "./redux/actions/actionCreator";
+import News from "./components/news/news";
 
 const App = () => {
+  const latestNews = useSelector((store) => store?.news?.latestNews || []);
+  const popularNews = useSelector((store) => store?.news?.popularNews || []);
+  const { latestNewsError, popularNewsError } = useSelector(
+    (state) => state?.errors || {}
+  );
   const dispatch = useDispatch();
-  const count = useSelector((state) => state?.counter?.count);
 
   return (
     <div>
-      <h1>{count}</h1>
-      <button onClick={() => dispatch(decreaseCount())}>decrease</button>
-      <button onClick={() => dispatch(increaseCount())}>increase</button>
-      <br />
-      <button onClick={() => dispatch(getNews())}>getLatestNews</button>
-      <button onClick={() => dispatch(getNews())}>getPopularNews</button>
+      <button onClick={() => dispatch(getNews())}>Get News</button>
+      <News news={latestNews} error={latestNewsError} title="Latest News" />
+      <News news={popularNews} error={popularNewsError} title="Popular News" />
     </div>
   );
 };

@@ -1,18 +1,4 @@
-import {
-  DECREASE_COUNT,
-  GET_NEWS,
-  INCREASE_COUNT,
-  SET_LATEST_NEWS,
-  SET_POPULAR_NEWS,
-} from "../constants";
-
-export const increaseCount = () => ({
-  type: INCREASE_COUNT,
-});
-
-export const decreaseCount = () => ({
-  type: DECREASE_COUNT,
-});
+import { GET_NEWS, SET_LATEST_NEWS, SET_POPULAR_NEWS } from "../constants";
 
 export const getNews = () => ({
   type: GET_NEWS,
