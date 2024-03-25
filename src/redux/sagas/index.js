@@ -1,33 +1,34 @@
 import {
-  take,
   takeEvery,
-  takeLatest,
-  takeLeading,
-  select,
   put,
   call,
+  fork,
+  all,
+  race,
 } from "@redux-saga/core/effects";
-import { INCREASE_COUNT, DECREASE_COUNT, GET_LATEST_NEWS } from "../constants";
-import { getLatestNews } from "../../api";
-import { setLatestNews } from "../actions/actionCreator";
-
-// const delay = (time) =>
-//   new Promise((resolve, reject) => {
-//     setTimeout(resolve, time * 1000);
-//   });
+import { INCREASE_COUNT, DECREASE_COUNT, GET_NEWS } from "../constants";
+import { getLatestNews, getPopularNews } from "../../api";
+import { setLatestNews, setPopularNews } from "../actions/actionCreator";
 
 export function* handleLatestNews() {
-  //workerSaga
-  const data = yield call(getLatestNews, 4);
+  const data = yield call(handleLatestNews, 4);
   yield put(setLatestNews(data));
+}
 
-  // const count = yield select(({ counter }) => counter.count);
-  // yield delay(2);
-  // console.log(`request ${count}`);
+export function* handlePopularNews() {
+  const data = yield call(getPopularNews, 10);
+  yield put(setPopularNews(data));
+}
+
+export function* handleNews() {
+  //workerSaga
+  // yield all([call(handleLatestNews), call(handlePopularNews)]);
+  yield fork(handleLatestNews);
+  yield fork(handlePopularNews);
 }
 
 export function* watchClickSaga() {
-  yield takeEvery(GET_LATEST_NEWS, handleLatestNews);
+  yield takeEvery(GET_NEWS, handleNews);
 }
 
 export default function* rootSaga() {

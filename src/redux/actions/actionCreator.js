@@ -1,8 +1,9 @@
 import {
   DECREASE_COUNT,
-  GET_LATEST_NEWS,
+  GET_NEWS,
   INCREASE_COUNT,
   SET_LATEST_NEWS,
+  SET_POPULAR_NEWS,
 } from "../constants";
 
 export const increaseCount = () => ({
@@ -13,11 +14,16 @@ export const decreaseCount = () => ({
   type: DECREASE_COUNT,
 });
 
-export const getLatestNews = () => ({
-  type: GET_LATEST_NEWS,
+export const getNews = () => ({
+  type: GET_NEWS,
 });
 
 export const setLatestNews = (news) => ({
   type: SET_LATEST_NEWS,
+  payload: news,
+});
+
+export const setPopularNews = (news) => ({
+  type: SET_POPULAR_NEWS,
   payload: news,
 });
